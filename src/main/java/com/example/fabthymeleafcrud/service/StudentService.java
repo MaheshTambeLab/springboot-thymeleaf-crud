@@ -1,35 +1,20 @@
 package com.example.fabthymeleafcrud.service;
 
+import com.example.fabthymeleafcrud.dto.StudentDTO;
 import com.example.fabthymeleafcrud.entity.Student;
-import com.example.fabthymeleafcrud.repository.StudentRepository;
-import org.springframework.stereotype.Service;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-@Service
-public class StudentService {
+public interface StudentService {
 
-    private final StudentRepository repo;
+    List<Student> getAll();
 
-    public StudentService(StudentRepository repo) {
-        this.repo = repo;
-    }
+    void save(Student student);
 
-    public List<Student> getAll() {
-        return repo.findAll();
-    }
+    Student getById(Long id);
 
-    public void save(Student student) {
-        repo.save(student);
-    }
+    void delete(Long id);
 
-    public Student getById(Long id) {
-        return repo.findById(id).orElse(null);
-    }
-
-    public void delete(Long id) {
-        repo.deleteById(id);
-    }
-
+    ResponseEntity<Object> getStudentDetailsById(Long id);
 }
-

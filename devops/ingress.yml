@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fabthymeleafcrud-ingress
+spec:
+  rules:
+    - host: fab.local
+      http:
+        paths:
+          - path: /fabthymeleafcrud
+            pathType: Prefix
+            backend:
+              service:
+                name: fabthymeleafcrud-service
+                port:
+                  number: 80

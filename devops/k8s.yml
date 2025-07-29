@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fabthymeleafcrud-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fabthymeleafcrud
+  template:
+    metadata:
+      labels:
+        app: fabthymeleafcrud
+    spec:
+      containers:
+        - name: fabthymeleafcrud
+          image: maheshtambelab/fabthymeleafcrud:v1
+          ports:
+            - containerPort: 8081
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: prod
+            - name: JAVA_OPTS
+              value: "-Dserver.port=8081 -Dserver.servlet.context-path=/fabthymeleafcrud"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: fabthymeleafcrud-service
+spec:
+  type: ClusterIP
+  selector:
+    app: fabthymeleafcrud
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8081
